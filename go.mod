@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	git.ucloudadmin.com/framework/micro-mini v0.12.3
-	git.ucloudadmin.com/uresource/go-uresource-api v1.0.13
+	github.com/envoyproxy/protoc-gen-validate v0.6.2
 	github.com/go-kratos/kratos/contrib/metrics/prometheus/v2 v2.0.0-20220919023954-9737a3c5e434
 	github.com/go-kratos/kratos/v2 v2.5.0
 	github.com/google/wire v0.5.0
@@ -29,6 +29,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
+	github.com/kr/pretty v0.3.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.4.2 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
@@ -43,5 +44,6 @@ require (
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.0 // indirect
 )

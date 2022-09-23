@@ -1,7 +1,7 @@
 package main
 
 import (
-	"git.ucloudadmin.com/uresource/go-uresource-api/internal/conf"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/conf"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/sdk/resource"
