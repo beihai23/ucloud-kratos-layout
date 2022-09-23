@@ -7,13 +7,17 @@
 package main
 
 import (
-	"github.com/go-kratos/kratos-layout/internal/biz"
-	"github.com/go-kratos/kratos-layout/internal/conf"
-	"github.com/go-kratos/kratos-layout/internal/data"
-	"github.com/go-kratos/kratos-layout/internal/server"
-	"github.com/go-kratos/kratos-layout/internal/service"
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/biz"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/conf"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/data"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/server"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/service"
+)
+
+import (
+	_ "go.uber.org/automaxprocs"
 )
 
 // Injectors from wire.go:

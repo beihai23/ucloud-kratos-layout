@@ -2,12 +2,49 @@ syntax = "proto3";
 
 package helloworld.v1;
 
-option go_package = "github.com/go-kratos/kratos-layout/api/helloworld/v1;v1";
+import "errors/errors.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/nobugtodebug/ucloud-kratos-layout/api/helloworld/v1;v1";
 option java_multiple_files = true;
 option java_package = "helloworld.v1";
 option objc_class_prefix = "APIHelloworldV1";
 
+extend google.protobuf.EnumValueOptions {
+  optional string uerrreason = 50005;
+}
+
+
 enum ErrorReason {
-  GREETER_UNSPECIFIED = 0;
-  USER_NOT_FOUND = 1;
+  option (errors.default_code) = 500;
+
+  // 框架级（通用错误码）
+  UnSpecified             = 0 ;
+  UNKNOWN                 = -1 [(errors.code)  = 500, (uerrreason) = "RetCode is not exists."] ;
+  PERMISSION_ERROR        = 4 [(errors.code)   = 400];
+  SERVICE_ERROR           = 5 [(errors.code)   = 500];
+  RETCODE_NOT_REGIST      = 91 [(errors.code)  = 500,(uerrreason) = "RetCode is not exists"];
+  VERIFY_FAIL             = 100 [(errors.code) = 500,(uerrreason) = "Verify fail"];
+  TIME_OUT                = 110 [(errors.code) = 500,(uerrreason) = "Time out"];
+  DATA_FAIL               = 120 [(errors.code) = 500,(uerrreason) = "Data fail"];
+  USER_PERMISSIONS        = 140 [(errors.code) = 500,(uerrreason) = "User permissions"];
+  SERVICE_UNAVAILABLE     = 150 [(errors.code) = 500,(uerrreason) = "Service unavailable"];
+  RATELIMIT               = 153 [(errors.code) = 500,(uerrreason) = "API request rate exceeds limit"];
+  CIRCUITBREAKER          = 154 [(errors.code) = 500,(uerrreason) = "Service is temporarily unavailable, we are working hard to restore it, please retry later."] ;
+  MISSING_ACTION          = 160 [(errors.code) = 400,(uerrreason) = "Missing Action"];
+  MISSING_SIGNATURE       = 170 [(errors.code) = 400,(uerrreason) = "Missing signature"];
+  ERROR_SIGNATURE         = 171 [(errors.code) = 400,(uerrreason) = "Signature VerfyAC Error"];
+  USER_NOT_EXISTS         = 172 [(errors.code) = 400,(uerrreason) = "User Not Exists"];
+  MISSING_API_VERSION     = 180 [(errors.code) = 400,(uerrreason) = "Missing api version"];
+  API_VERSION_ERROR       = 190 [(errors.code) = 400,(uerrreason) = "Api version error"];
+  GET_NAMES_ERROR         = 200 [(errors.code) = 400,(uerrreason) = "Get names error"];
+  PARAMS_RANGE_ERROR      = 210 [(errors.code) = 400];
+  MISSING_PARAMS          = 220 [(errors.code) = 400,(uerrreason) = "Missing params"];
+  VALIDATOR               = 221 [(errors.code) = 500,(uerrreason) = "Parameter exceeds limits, please reenter."] ;
+  PARAMS_ERROR            = 230 [(errors.code) = 400,(uerrreason) = "Params not available"];
+  CODEC                   = 231 [(errors.code) = 500, (uerrreason) = "Parameter format error, please reenter."] ;
+  LACK_OF_BALANCE         = 250 [(errors.code) = 400,(uerrreason) = "Lack of balance"];
+  DEDUCTIONS_ERROR        = 260 [(errors.code) = 400,(uerrreason) = "Deductions error"];
+  SETTLEMENT_ERROR        = 270 [(errors.code) = 400,(uerrreason) = "Settlement error"];
+  NO_ACTIVE_BACKEND_ERROR = 280 [(errors.code) = 400,(uerrreason) = "no active backend error"];
 }

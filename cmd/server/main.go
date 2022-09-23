@@ -2,16 +2,22 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"github.com/go-kratos/kratos/v2"
 	"os"
 
-	"github.com/go-kratos/kratos-layout/internal/conf"
-	"github.com/go-kratos/kratos/v2"
+	"git.ucloudadmin.com/framework/micro-mini/log/zap"
+
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/nobugtodebug/ucloud-kratos-layout/internal/conf"
+	"go.uber.org/automaxprocs/maxprocs"
+
+	_ "go.uber.org/automaxprocs"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"
@@ -22,12 +28,15 @@ var (
 	Version string
 	// flagconf is the config flag.
 	flagconf string
+	// flagversion print version info
+	flagversion bool
 
 	id, _ = os.Hostname()
 )
 
 func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
+	flag.BoolVar(&flagversion, "ver", false, "print version info")
 }
 
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
@@ -46,14 +55,30 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 
 func main() {
 	flag.Parse()
-	logger := log.With(log.NewStdLogger(os.Stdout),
-		"ts", log.DefaultTimestamp,
-		"caller", log.DefaultCaller,
+
+	undo, err := maxprocs.Set()
+	defer undo()
+	if err != nil {
+		log.Fatalf("failed to set GOMAXPROCS: %v", err)
+	}
+
+	if flagversion {
+		fmt.Println(" --------")
+		fmt.Println(Name, " - version: ", Version)
+		fmt.Println(" --------")
+		return
+	}
+
+	zlog := zap.NewProduction()
+	defer zlog.Sync()
+
+	logger := log.With(zlog,
+		"caller", zap.Caller(4),
 		"service.id", id,
 		"service.name", Name,
 		"service.version", Version,
-		"trace.id", tracing.TraceID(),
-		"span.id", tracing.SpanID(),
+		"trace_id", tracing.TraceID(),
+		"span_id", tracing.SpanID(),
 	)
 	c := config.New(
 		config.WithSource(
