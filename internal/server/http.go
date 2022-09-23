@@ -12,10 +12,12 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/validate"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/go-kratos/swagger-api/openapiv2"
 	v1 "github.com/nobugtodebug/ucloud-kratos-layout/api/helloworld/v1"
 	"github.com/nobugtodebug/ucloud-kratos-layout/internal/conf"
 	"github.com/nobugtodebug/ucloud-kratos-layout/internal/service"
 	prom "github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (

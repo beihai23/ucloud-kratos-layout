@@ -42,6 +42,17 @@ api:
 	       --openapi_out=. \
 	       $(API_PROTO_FILES)
 
+.PHONY: errors
+# generate errors code
+errors:
+	protoc --proto_path=. \
+               --proto_path=./third_party \
+               --go_out=paths=source_relative:. \
+               --go-errors_out=paths=source_relative:. \
+			   --ucloud-style_out=paths=source_relative:. \
+               $(API_PROTO_FILES)
+
+
 .PHONY: build
 # build
 build:
